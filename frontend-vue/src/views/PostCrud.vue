@@ -141,6 +141,7 @@ export default {
   max-width: 800px;
   margin: auto;
   font-family: sans-serif;
+  background-color: white;
 }
 
 form {
