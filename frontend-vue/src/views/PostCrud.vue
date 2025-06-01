@@ -12,8 +12,8 @@
       <p v-if="passwordError" style="color: red; font-size: 0.9em;">
         {{ passwordError }}
       </p>
-      <button type="submit">{{ form.id ? 'Actualizar' : 'Registrar' }}</button>
-      <button v-if="form.id" type="button" @click="cancelEdit">Cancelar</button>
+      <button class="botonRegistrar" type="submit">{{ form.id ? 'Actualizar' : 'Registrar' }}</button>
+      <button v-if="form.id" type="button" @click="cancelEdit">Cancelar edición</button>
     </form>
 
     <!-- TABLA DE USUARIOS -->
@@ -137,11 +137,22 @@ export default {
 </script>
 
 <style>
+.botonRegistrar {
+  border-radius: 20px;
+  padding: 10px 20px 10px 20px;
+  border: none;
+  box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.3);
+  background: #dc7633;
+  color: white;
+}
+
 .container {
-  max-width: 800px;
+  max-width: 1500px;
   margin: auto;
   font-family: sans-serif;
-  background-color: white;
+  background-color: #154360;
+  border-radius: 20px;
+  padding: 50px;
 }
 
 form {
