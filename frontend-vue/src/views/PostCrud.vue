@@ -1,4 +1,5 @@
 <template>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <div class="container">
     <h2>Gestión de Usuarios</h2>
 
@@ -12,8 +13,11 @@
       <p v-if="passwordError" style="color: red; font-size: 0.9em;">
         {{ passwordError }}
       </p>
-      <button class="botonRegistrar" type="submit">{{ form.id ? 'Actualizar' : 'Registrar' }}</button>
-      <button v-if="form.id" type="button" @click="cancelEdit">Cancelar edición</button>
+      <button class="botonRegistrar" type="submit"><font-awesome-icon icon="clipboard" /> {{ form.id ? 'Actualizar' :
+        'Registrar' }}</button>
+      <button v-if="form.id" class="botonCancelar" type="button" @click="cancelEdit"><font-awesome-icon icon="times" />
+        Cancelar
+        edición</button>
     </form>
 
     <!-- TABLA DE USUARIOS -->
@@ -32,8 +36,9 @@
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
           <td>
-            <button @click="editarUsuario(user)">Editar</button>
-            <button @click="borrarUsuario(user.id)">Eliminar</button>
+            <button class="botonEditar" @click="editarUsuario(user)"><font-awesome-icon icon="pen" /> Editar</button>
+            <button class="botonEliminar" @click="borrarUsuario(user.id)"><font-awesome-icon icon="trash" />
+              Eliminar</button>
           </td>
         </tr>
       </tbody>
@@ -125,7 +130,7 @@ export default {
 
     // cancelEdicion permite cancelar la edición y volver al modo "crear"
     cancelarEdicion() {
-      this.resetForm(); // Limpia el formulario
+      this.limpiarForm(); // Limpia el formulario
     },
 
     // limpiarForm limpia todos los campos del formulario y reinicia el modo "crear"
@@ -137,12 +142,49 @@ export default {
 </script>
 
 <style>
+body {
+  background: linear-gradient(to right, red, rgb(153, 0, 255));
+  display: flex;
+  padding: 50px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
 .botonRegistrar {
   border-radius: 20px;
   padding: 10px 20px 10px 20px;
   border: none;
   box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.3);
-  background: #dc7633;
+  background: #27AE60;
+  color: white;
+}
+
+.botonCancelar {
+  border-radius: 20px;
+  padding: 10px 20px 10px 20px;
+  border: none;
+  box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.3);
+  background: red;
+  color: white;
+}
+
+.botonEditar {
+  border-radius: 20px;
+  padding: 10px 20px 10px 20px;
+  border: none;
+  box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.3);
+  background: #F4D03F;
+  color: white;
+}
+
+.botonEliminar {
+  border-radius: 20px;
+  padding: 10px 20px 10px 20px;
+  border: none;
+  box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.3);
+  background: red;
   color: white;
 }
 
@@ -150,9 +192,13 @@ export default {
   max-width: 1500px;
   margin: auto;
   font-family: sans-serif;
-  background-color: #154360;
+  background-color: #212F3D;
   border-radius: 20px;
   padding: 50px;
+}
+
+.container input {
+  border-radius: 20px;
 }
 
 form {
