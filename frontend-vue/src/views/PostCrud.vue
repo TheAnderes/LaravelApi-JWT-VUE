@@ -1,7 +1,7 @@
 <template>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <div class="container">
-    <h2>Gestión de Usuarios</h2>
+    <h2>CRUD completo</h2>
 
     <!-- FORMULARIO -->
     <form @submit.prevent="submitForm">
