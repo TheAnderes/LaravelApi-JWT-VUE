@@ -20,6 +20,8 @@
         edición</button>
     </form>
 
+    <button @click="logout">Cerrar sesión</button>
+
     <!-- TABLA DE USUARIOS -->
     <table>
       <thead>
@@ -27,6 +29,7 @@
           <th>ID</th>
           <th>Nombre</th>
           <th>Correo</th>
+          <th>Contraseña</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -35,6 +38,7 @@
           <td>{{ user.id }}</td>
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
+          <td>{{ user.password }}</td>
           <td>
             <button class="botonEditar" @click="editarUsuario(user)"><font-awesome-icon icon="pen" /> Editar</button>
             <button class="botonEliminar" @click="borrarUsuario(user.id)"><font-awesome-icon icon="trash" />
@@ -48,6 +52,7 @@
 
 <script>
 import axios from 'axios'; // Importamos Axios para hacer peticiones HTTP
+import { useRouter } from 'vue-router';
 
 export default {
   // data() define las variables reactivas del componente
@@ -137,21 +142,20 @@ export default {
     limpiarForm() {
       this.form = { id: null, name: '', email: '', password: '' };
     }
+  },
+  setup() {
+    const router = useRouter()
+    const logout = () => {
+      localStorage.removeItem('token')
+      router.push('/')
+    }
+    return { logout }
   }
+
 };
 </script>
 
-<style>
-body {
-  background: linear-gradient(to right, red, rgb(153, 0, 255));
-  display: flex;
-  padding: 50px;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-}
-
+<style scoped>
 .botonRegistrar {
   border-radius: 20px;
   padding: 10px 20px 10px 20px;

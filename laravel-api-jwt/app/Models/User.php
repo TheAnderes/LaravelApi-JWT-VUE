@@ -21,7 +21,7 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     /**
-     * Los atributos que deben ocultarse en arrays (por ejemplo, para API JSON).
+     * Los atributos que deben ocultarse en arrays.
      */
     protected $hidden = [
         'password',

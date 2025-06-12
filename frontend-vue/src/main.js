@@ -6,7 +6,8 @@ import { faTrash, faPen, faClipboard, faCheck, faTimes } from '@fortawesome/free
 // Componente de FontAwesome
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { createApp } from 'vue'
-import App from './views/PostCrud.vue'
+import router from './router'
+import App from './App.vue'
 
 // Agregar iconos a la librería a utilizar
 library.add(faTrash, faPen, faClipboard, faCheck, faTimes)
@@ -14,5 +15,5 @@ const app = createApp(App)
 
 // Registra el componente globalmente
 app.component('font-awesome-icon', FontAwesomeIcon)
-
+app.use(router)
 app.mount('#app')

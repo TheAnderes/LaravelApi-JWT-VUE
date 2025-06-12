@@ -53,18 +53,39 @@ class AuthController extends Controller
         // Validar las credenciales
         $credentials = $request->only('email', 'password');
 
-        try {
-            // Intentar autenticar y generar el token
-            if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'Credenciales inválidas'], 401);
-            }
-        } catch (JWTException $e) {
-            // Error al intentar crear el token
-            return response()->json(['error' => 'No se pudo crear el token'], 500);
+        // Validación explícita en Laravel
+        $validator = Validator::make($credentials, [
+            'email' => 'required|email',
+            'password' => 'required|string|min:6'
+        ]);
+
+        // Si la validación falla, devuelve un error 422
+        if ($validator->fails()) {
+            return response()->json(['error' => 'Credenciales inválidas', 'message' => $validator->errors()], 422);
         }
 
-        // Retornar el token
-        return response()->json(compact('token'));
+        // Buscar al usuario por correo
+        $user = User::where('email', $credentials['email'])->first();
+
+        // Verificar si el usuario existe
+        if (!$user) {
+            return response()->json(['error' => 'El Usuario NO EXISTE'], 401);
+        }
+
+        // Verificar si la contraseña proporcionada coincide con la contraseña hasheada en la base de datos
+        if (Hash::check($credentials['password'], $user->password)) {
+            // La contraseña es correcta, proceder a generar el token
+            try {
+                // Intentar generar el token
+                $token = JWTAuth::fromUser($user);
+
+                return response()->json(['token' => $token]);
+            } catch (JWTException $e) {
+                return response()->json(['error' => 'No se pudo crear el token'], 500);
+            }
+        } else {
+            return response()->json(['error' => 'Credenciales inválidas'], 401);
+        }
     }
 
     /**
